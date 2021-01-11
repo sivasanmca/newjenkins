@@ -1,8 +1,5 @@
 
-FROM openjdk:8
-
-ADD target/javaexpress-springboot-docker.jar javaexpress-springboot-docker.jar
-
-EXPOSE 8090
-
-ENTRYPOINT ["java","-jar","javaexpress-springboot-docker.jar"]
+FROM tomcat:8.0.20-jre8
+RUN sed -i '/<\/tomcat-users>/ i\<user username="admin" password="password" roles="admin-gui,manager-gui"/>' /usr/local/tomcat/conf/tomcat-users.xml
+#COPY tomcat-users.xml /usr/local/tomcat/conf/tomcat-users.xml
+COPY java-web-app.war /usr/local/tomcat/webapps/gradle-web-app.war
